@@ -9,7 +9,7 @@ targets:
     run_as:
       user_name: matias@example.com
     environment:
-      CATALOGO: main_dev
+      CATALOGO: dev_ref_control
     files:
       - path: tables.txt
         mount_path: /Workspace/tmp/tables.txt
@@ -23,7 +23,7 @@ targets:
     run_as:
       user_name: matias@example.com
     environment:
-      CATALOGO: main_pre
+      CATALOGO: pre_ref_control
     files:
       - path: tables.txt
         mount_path: /Workspace/tmp/tables.txt
@@ -39,7 +39,7 @@ targets:
     run_as:
       user_name: matias@example.com
     environment:
-      CATALOGO: main_prod
+      CATALOGO: pro_ref_control
     files:
       - path: tables.txt
         mount_path: /Workspace/tmp/tables.txt

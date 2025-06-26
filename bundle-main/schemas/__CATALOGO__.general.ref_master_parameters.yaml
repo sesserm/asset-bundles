@@ -1,0 +1,22 @@
+columns:
+  - name: id
+    type: string
+    nullable: true
+  - name: entity_id
+    type: int
+    nullable: true
+  - name: parameters
+    type: string
+    nullable: true
+  - name: start_date
+    type: date
+    nullable: true
+  - name: end_date
+    type: date
+    nullable: true
+  - name: creation_date
+    type: timestamp
+    nullable: true
+  - name: update_date
+    type: timestamp
+    nullable: true

@@ -1,1 +1,2 @@
-__CATALOGO__.negocio.clientes_info
+__CATALOGO__.general.ref_master_parameters
+__CATALOGO__.general.ref_master_entities
