@@ -1,0 +1,56 @@
+bundle:
+  name: bundle-main
+
+targets:
+  dev:
+    workspace:
+      host: https://<DATABRICKS-DEV>
+      root_path: /Repos/matias/dev/bundle-main
+    run_as:
+      user_name: matias@example.com
+    environment:
+      CATALOGO: main_dev
+    files:
+      - path: tables.txt
+        mount_path: /Workspace/tmp/tables.txt
+      - path: schemas/
+        mount_path: /Workspace/tmp/schemas/
+
+  pre:
+    workspace:
+      host: https://<DATABRICKS-PRE>
+      root_path: /Repos/matias/pre/bundle-main
+    run_as:
+      user_name: matias@example.com
+    environment:
+      CATALOGO: main_pre
+    files:
+      - path: tables.txt
+        mount_path: /Workspace/tmp/tables.txt
+      - path: volumes/dev_to_pre.txt
+        mount_path: /Workspace/tmp/volumes.txt
+      - path: schemas/
+        mount_path: /Workspace/tmp/schemas/
+
+  prod:
+    workspace:
+      host: https://<DATABRICKS-PROD>
+      root_path: /Repos/matias/prod/bundle-main
+    run_as:
+      user_name: matias@example.com
+    environment:
+      CATALOGO: main_prod
+    files:
+      - path: tables.txt
+        mount_path: /Workspace/tmp/tables.txt
+      - path: volumes/pre_to_prod.txt
+        mount_path: /Workspace/tmp/volumes.txt
+      - path: schemas/
+        mount_path: /Workspace/tmp/schemas/
+
+resources:
+  notebooks:
+    migrar_tablas:
+      path: notebooks/migrar_tablas.py
+    crear_volumenes:
+      path: notebooks/crear_volumenes.py

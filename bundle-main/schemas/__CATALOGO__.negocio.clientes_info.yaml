@@ -1,0 +1,16 @@
+columns:
+  - name: id
+    type: string
+    nullable: false
+  - name: nombre
+    type: string
+    nullable: true
+  - name: pais
+    type: string
+    nullable: true
+  - name: activo
+    type: boolean
+    nullable: true
+  - name: env
+    type: string
+    nullable: true
