@@ -1,0 +1,79 @@
+bundle:
+  name: bundle-dev_ref_control
+  uuid: 12345678-1234-5678-1234-567812345678
+
+variables:
+  catalog:
+    type: string
+    default: dev_ref_control
+    description: "Nombre del catálogo a utilizar en el entorno de desarrollo"
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-69958c63-6901.cloud.databricks.com/
+      root_path: ~/Repos/matias/dev/bundle-main
+    run_as:
+      user_name: sessermatias@gmail.com
+    variables:
+      catalog:
+        default: dev_ref_control
+    sync:
+      include:
+        - tables.txt
+        - schemas/**
+        - volumes/dev_to_pre.txt
+
+  pre:
+    mode: staging
+    workspace:
+      host: https://dbc-69958c63-6901.cloud.databricks.com/
+      root_path: /Repos/matias/pre/bundle-main
+    run_as:
+      user_name: matias@example.com
+    variables:
+      catalog: pre_ref_control
+    sync:
+      include:
+        - tables.txt
+        - schemas/**
+        - volumes/dev_to_pre.txt
+
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-69958c63-6901.cloud.databricks.com/
+      root_path: /Repos/matias/prod/bundle-main
+    run_as:
+      user_name: matias@example.com
+    variables:
+      catalog: pro_ref_control
+    sync:
+      include:
+        - tables.txt
+        - schemas/**
+        - volumes/pre_to_prod.txt
+
+resources:
+  jobs:
+    migrar_tablas:
+      name: migrar_tablas
+      tasks:
+        - task_key: migrar_tablas_task
+          notebook_task:
+            notebook_path: /Repos/matias/dev/bundle-main/notebooks/migrar_tablas.py
+      parameters:
+        - name: catalog
+          default: "${var.catalog}"
+
+    crear_volumenes:
+      name: crear_volumenes
+      tasks:
+        - task_key: crear_volumenes_task
+          notebook_task:
+            notebook_path: /Repos/matias/dev/bundle-main/notebooks/crear_volumenes.py
+      parameters:
+        - name: catalog
+          default: "${var.catalog}"

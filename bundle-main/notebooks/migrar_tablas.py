@@ -15,9 +15,14 @@ else:
     print("❌ Entorno no soportado")
     dbutils.notebook.exit("")
 
-tables_path = "/Workspace/tmp/tables.txt"
-schemas_base = "/Workspace/tmp/schemas"
-catalog = os.environ.get("CATALOGO")
+# Ajustamos la ruta base al nivel superior donde están notebooks, tables.txt y schemas/
+base_path = os.path.dirname(os.path.dirname(notebook_path))  # Sube dos niveles desde notebooks/
+
+tables_path = os.path.join(base_path, "tables.txt")
+schemas_base = os.path.join(base_path, "schemas")
+dbutils.widgets.text("CATALOGO", "valor_por_defecto")
+catalog = dbutils.widgets.get("CATALOGO")
+print(f"CATALOGO recibido: {catalog}")
 
 tablas_raw = [line.strip() for line in open(tables_path) if line.strip()]
 tablas = [t.replace("__CATALOGO__", catalog) for t in tablas_raw]
