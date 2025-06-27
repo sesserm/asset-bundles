@@ -56,24 +56,46 @@ targets:
         - schemas/**
         - volumes/pre_to_prod.txt
 
-resources:
+#resources:  ## Estas configuraciones aplican cuando queremos correr en un cluster on purpose.
+#  jobs:
+#    migrar_tablas:
+#      name: migrar_tablas
+#      tasks:
+#        - task_key: migrar_tablas_task
+#          spark_python_task:
+#            python_file: /Repos/matias/dev/bundle-main/notebooks/migrar_tablas.py
+#            parameters:
+#              - name: catalog
+#                default: "${var.catalog}"
+
+#    crear_volumenes:
+#      name: crear_volumenes
+#      tasks:
+#        - task_key: crear_volumenes_task
+#          spark_python_task:
+#            python_file: /Repos/matias/dev/bundle-main/notebooks/crear_volumenes.py
+#            parameters:
+#              - name: catalog
+#                default: "${var.catalog}"
+
+resources:  ## Estas configuraciones aplican cuando queremos correr en un cluster on purpose.
   jobs:
     migrar_tablas:
-      name: migrar_tablas
+      name: migrar_tablas_serverless
       tasks:
         - task_key: migrar_tablas_task
-          notebook_task:
-            notebook_path: /Repos/matias/dev/bundle-main/notebooks/migrar_tablas.py
-      parameters:
-        - name: catalog
-          default: "${var.catalog}"
+          spark_python_task:
+            python_file: /Repos/matias/dev/bundle-main/notebooks/migrar_tablas.py
+            parameters:
+              - name: catalog
+                default: "${var.catalog}"
 
     crear_volumenes:
       name: crear_volumenes
       tasks:
         - task_key: crear_volumenes_task
-          notebook_task:
-            notebook_path: /Repos/matias/dev/bundle-main/notebooks/crear_volumenes.py
-      parameters:
-        - name: catalog
-          default: "${var.catalog}"
+          spark_python_task:
+            python_file: /Repos/matias/dev/bundle-main/notebooks/crear_volumenes.py
+            parameters:
+              - name: catalog
+                default: "${var.catalog}"
